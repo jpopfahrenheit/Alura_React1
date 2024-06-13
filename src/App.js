@@ -252,29 +252,7 @@ function App() {
   ]
   )
 
-  //Ternario --> condicion ? seMuestra : noSeMuestra
-  //  condicion %% seMuestra //Se usa por si no quiero mostrar nada si no se cumple la condición
-
-  const cambiarMostrar = () => {
-    actualizarMostrar(!mostrarFormulario)
-  }
-
-  //Registrar colaborador
-
-  const registrarColaborador = (colaborador) => {
-    console.log("Nuevo colaborador", colaborador)
-    actualizarColaboradores()
-    //Spread operator
-    actualizarColaboradores([...colaboradores, colaborador])
-  }
-
-  // Eliminar colaborador
-  const eliminarColaborador = () => {
-    console.log("Eliminar Colaborador")
-  }
-
-  //Lista de equipos
-  const equipos = [
+  const[equipos, actualizarEquipos] = useState([
     {
       titulo: 'Programación',
       colorPrimario: "#57C278",
@@ -310,7 +288,43 @@ function App() {
       colorPrimario: "#FF8A29",
       colorSecundario: "#FFEEDF"
     }
-  ]
+  ])
+
+  //Ternario --> condicion ? seMuestra : noSeMuestra
+  //  condicion %% seMuestra //Se usa por si no quiero mostrar nada si no se cumple la condición
+
+  const cambiarMostrar = () => {
+    actualizarMostrar(!mostrarFormulario)
+  }
+
+  //Registrar colaborador
+
+  const registrarColaborador = (colaborador) => {
+    console.log("Nuevo colaborador", colaborador)
+    actualizarColaboradores()
+    //Spread operator
+    actualizarColaboradores([...colaboradores, colaborador])
+  }
+
+  // Eliminar colaborador
+  const eliminarColaborador = () => {
+    console.log("Eliminar Colaborador")
+  }
+
+  //Actualizar color de equipo
+  const actualizarColor = (color, titulo) => {
+    console.log("Actualizar: ", color, titulo)
+    const equiposActualizados = equipos.map((equipo)=>{
+      if(equipo.titulo === titulo){
+        equipo.colorPrimario = color
+      }
+      return equipo
+    })
+
+    actualizarEquipos(equiposActualizados)
+  }
+
+
 
   return (
     <div>
@@ -330,6 +344,7 @@ function App() {
           key={equipo.titulo}
           colaboradores={colaboradores.filter(colaborador => colaborador.equipo === equipo.titulo)}
           eliminarColaborador={eliminarColaborador}
+          actualizarColor={actualizarColor}
         />
         )
       }
